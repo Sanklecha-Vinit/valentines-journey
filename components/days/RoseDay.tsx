@@ -114,7 +114,7 @@ export default function RoseDay({ onComplete }: { onComplete: () => void }) {
           duration: 1.2,
           ease: "easeOut",
         }}
-        transformOrigin="center"
+style={{ transformOrigin: "center" }}
       />
 
       {/* Stem */}
