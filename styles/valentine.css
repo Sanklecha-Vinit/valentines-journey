@@ -1,110 +1,86 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Inter, system-ui, sans-serif;
-  background: linear-gradient(180deg, #ff8fb3 0%, #ff4d79 100%);
-  min-height: 100vh;
-  color: #ffffff;
-}
-
+/* Page background */
 .page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ff5f8f 0%, #ff8fb3 100%);
   display: flex;
   justify-content: center;
-  padding: 28px 16px;
+  padding: 32px 16px;
+  color: white;
+  font-family: "Poppins", system-ui, sans-serif;
 }
 
+/* Center wrapper */
 .wrapper {
   width: 100%;
   max-width: 420px;
 }
 
+/* Headings */
 .title {
-  text-align: center;
-  font-size: 30px;
+  font-size: 2.2rem;
   font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
 }
 
 .subtitle {
   text-align: center;
-  font-size: 14px;
-  margin-top: 4px;
-  opacity: 0.95;
+  opacity: 0.9;
+  font-size: 1rem;
 }
 
+/* Spacing */
+.margin-top-28 {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Cards */
 .day-card {
-  background: #ffe1eb; /* light pink, near white */
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
   border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 12px 24px rgba(255, 77, 121, 0.35);
-  border: 1.5px solid rgba(255, 77, 121, 0.35);
+  padding: 18px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: none;
-  width: 100%;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: white;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.day-card:hover {
-  transform: translateY(-2px);
+.day-card:hover:not(.locked) {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .day-card.locked {
-  background: #ffd0dd;
-  opacity: 0.85;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
+/* Text inside card */
 .day-title {
-  font-size: 18px;
+  font-size: 1.05rem;
   font-weight: 600;
-  color: #ff3366; /* darker pink */
 }
 
 .day-subtitle {
-  font-size: 13px;
-  margin-top: 3px;
-  color: #ff5c8a;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-top: 4px;
 }
 
 .lock-text {
-  font-size: 12px;
+  font-size: 0.75rem;
   margin-top: 6px;
-  color: #ff6b91;
+  opacity: 0.85;
 }
 
-.day-box {
-  background: #ff9dbc;
-  border-radius: 22px;
-  padding: 28px 22px;
-  box-shadow: 0 18px 36px rgba(255, 77, 121, 0.45);
-  text-align: center;
-}
-
-.day-text {
-  font-size: 16px;
-  line-height: 1.75;
-}
-
-.btn {
-  background: #ffffff;
-  color: #ff4d79;
-  border: none;
-  border-radius: 999px;
-  padding: 10px 24px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 16px;
-}
-
-.btn.secondary {
-  background: transparent;
-  color: #ffffff;
-  border: 1.5px solid #ffffff;
+/* Icon */
+.heart-icon {
+  font-size: 1.4rem;
 }

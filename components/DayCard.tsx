@@ -1,33 +1,45 @@
-export default function DayCard({ day, unlocked, onClick }) {
+"use client";
+
+import { DAYS } from "@/data/daysConfig";
+import { useDateUnlock } from "@/hooks/useDateUnlock";
+import { useRouter } from "next/navigation";
+
+export default function Home() {
+  const router = useRouter();
+
   return (
-    <button
-      disabled={!unlocked}
-      onClick={onClick}
-      className={`
-        w-full rounded-2xl px-5 py-4 text-left transition
-        ${unlocked
-          ? "bg-white/15 hover:bg-white/25"
-          : "bg-white/10 opacity-60 cursor-not-allowed"}
-      `}
-    >
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-white text-lg">{day.title}</h3>
-          <p className="text-white/80 text-sm italic">
-            {day.subtitle}
-          </p>
+    <div className="page">
+      <div className="wrapper">
+        <h1 className="title">A Little Love 💖</h1>
+        <p className="subtitle">one day at a time</p>
+
+        <div className="margin-top-28">
+          {DAYS.map(day => {
+            const unlocked = useDateUnlock(day.date);
+
+            return (
+              <button
+                key={day.id}
+                className={`day-card ${!unlocked ? "locked" : ""}`}
+                disabled={!unlocked}
+                onClick={() => unlocked && router.push(`/day/${day.id}`)}
+              >
+                <div>
+                  <div className="day-title">{day.title}</div>
+                  <div className="day-subtitle">{day.subtitle}</div>
+                  {!unlocked && (
+                    <div className="lock-text">🔒 Unlocks tomorrow</div>
+                  )}
+                </div>
+                <span className="heart-icon">
+                  {unlocked ? "💗" : "🔒"}
+                </span>
+
+              </button>
+            );
+          })}
         </div>
-
-        <span className="text-white">
-          {unlocked ? "✨" : "🔒"}
-        </span>
       </div>
-
-      {!unlocked && (
-        <p className="text-xs text-white/70 mt-2">
-          Unlocks tomorrow
-        </p>
-      )}
-    </button>
+    </div>
   );
 }
