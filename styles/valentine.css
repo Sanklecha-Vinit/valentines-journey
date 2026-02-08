@@ -1,86 +1,208 @@
-/* Page background */
 .page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #ff5f8f 0%, #ff8fb3 100%);
-  display: flex;
-  justify-content: center;
-  padding: 32px 16px;
+  background: linear-gradient(180deg, #ff5f9e, #ff86b2);
   color: white;
-  font-family: "Poppins", system-ui, sans-serif;
 }
 
-/* Center wrapper */
 .wrapper {
-  width: 100%;
   max-width: 420px;
+  margin: auto;
+  padding: 48px 20px;
 }
 
-/* Headings */
 .title {
-  font-size: 2.2rem;
-  font-weight: 700;
   text-align: center;
-  margin-bottom: 4px;
+  font-size: 32px;
+  font-weight: 700;
 }
 
 .subtitle {
   text-align: center;
   opacity: 0.9;
-  font-size: 1rem;
+  margin-bottom: 32px;
 }
 
-/* Spacing */
-.margin-top-28 {
-  margin-top: 28px;
+.cards {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* Cards */
 .day-card {
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.18);
   border-radius: 18px;
-  padding: 18px 20px;
+  padding: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  backdrop-filter: blur(12px);
   border: none;
-  cursor: pointer;
   color: white;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.day-card:hover:not(.locked) {
-  transform: scale(1.02);
-  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
 }
 
 .day-card.locked {
-  opacity: 0.55;
-  cursor: not-allowed;
+  opacity: 0.6;
 }
 
-/* Text inside card */
-.day-title {
-  font-size: 1.05rem;
+.locked-screen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #ff5f9e, #ff86b2);
+  color: white;
+  font-size: 20px;
+}
+
+.propose-bg {
+  background: linear-gradient(180deg, #ff5f9e, #ff85b3);
+}
+
+.ring {
+  width: 90px;
+  height: 90px;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.ring::after {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 18px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.final-question {
+  font-size: 28px;
   font-weight: 600;
+  margin: 28px 0 18px;
 }
 
-.day-subtitle {
-  font-size: 0.85rem;
-  opacity: 0.9;
-  margin-top: 4px;
+.proposal-buttons {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
 }
 
-.lock-text {
-  font-size: 0.75rem;
-  margin-top: 6px;
-  opacity: 0.85;
+.proposal-buttons button {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-/* Icon */
-.heart-icon {
-  font-size: 1.4rem;
+.proposal-buttons .yes {
+  background: white;
+  color: #ff5f9e;
+}
+
+.proposal-buttons .always {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+.propose-cute {
+  background: linear-gradient(180deg, #ff6fae, #ff9fc9);
+}
+
+/* Heart shape */
+.cute-heart {
+  width: 70px;
+  height: 70px;
+  background: #ff3b7f;
+  position: relative;
+  transform: rotate(45deg);
+  margin-bottom: 28px;
+}
+
+.cute-heart::before,
+.cute-heart::after {
+  content: "";
+  width: 70px;
+  height: 70px;
+  background: #ff3b7f;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.cute-heart::before {
+  top: -35px;
+  left: 0;
+}
+
+.cute-heart::after {
+  left: -35px;
+  top: 0;
+}
+
+.question-text {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.cute-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.cute-buttons button {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cute-buttons .yes {
+  background: white;
+  color: #ff3b7f;
+}
+
+.cute-buttons .always {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* Button container */
+.cute-buttons {
+  display: flex;
+  flex-direction: column; /* 👈 makes it more cute on mobile */
+  gap: 14px;              /* 👈 proper breathing space */
+  margin-top: 20px;
+}
+
+/* Buttons */
+.cute-buttons button {
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: white;
+  color: #ff3b7f;
+  transition: transform 0.2s ease;
+}
+
+.cute-buttons button:hover {
+  transform: scale(1.04);
+}
+
+/* Acceptance message */
+.accept-message {
+  margin-top: 28px;
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 300px;
 }

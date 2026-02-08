@@ -13,7 +13,7 @@ export default function Home() {
         <h1 className="title">A Little Love 💖</h1>
         <p className="subtitle">one day at a time</p>
 
-        <div className="margin-top-28">
+        <div className="cards">
           {DAYS.map(day => {
             const unlocked = useDateUnlock(day.date);
 
@@ -21,20 +21,14 @@ export default function Home() {
               <button
                 key={day.id}
                 className={`day-card ${!unlocked ? "locked" : ""}`}
-                disabled={!unlocked}
                 onClick={() => unlocked && router.push(`/day/${day.id}`)}
               >
                 <div>
                   <div className="day-title">{day.title}</div>
                   <div className="day-subtitle">{day.subtitle}</div>
-                  {!unlocked && (
-                    <div className="lock-text">🔒 Unlocks tomorrow</div>
-                  )}
+                  {!unlocked && <div className="lock-text">🔒 Opens at midnight</div>}
                 </div>
-                <span className="heart-icon">
-                  {unlocked ? "💗" : "🔒"}
-                </span>
-
+                <span className="icon">{unlocked ? "💗" : "🔒"}</span>
               </button>
             );
           })}

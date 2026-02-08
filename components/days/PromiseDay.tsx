@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function PromiseDay({ onComplete }: { onComplete: () => void }) {
+export default function PromiseDay({ onComplete }: { onComplete?: () => void }) {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function PromiseDay({ onComplete }: { onComplete: () => void }) {
       setTimeout(() => setStep(1), 1000),   // pause
       setTimeout(() => setStep(2), 2800),   // choice
       setTimeout(() => setStep(3), 5200),   // message
-      setTimeout(() => onComplete(), 15000),
+      setTimeout(() => onComplete?.(), 15000),
     ];
 
     return () => timers.forEach(clearTimeout);

@@ -1,75 +1,78 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef } from "react";
 
-export default function ChocolateDay({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState(0);
-//   const hasRun = useRef(false);
+export default function ChocolateDay({
+  onComplete,
+}: {
+  onComplete?: () => void;
+}) {
+  const [opened, setOpened] = useState(false);
+  const completed = useRef(false);
 
-  useEffect(() => {
-    // if (hasRun.current) return;
-    // hasRun.current = true;
+  const handleOpen = () => {
+    if (opened) return;
+    setOpened(true);
 
-    const timers = [
-      setTimeout(() => setStep(1), 1200), // chocolate appears
-      setTimeout(() => setStep(2), 2600), // bite melts
-      setTimeout(() => setStep(3), 4200), // message
-      setTimeout(() => onComplete(), 9000),
-    ];
-
-    return () => timers.forEach(clearTimeout);
-  }, [onComplete]);
+    if (!completed.current) {
+      completed.current = true;
+      if (onComplete) {
+        setTimeout(onComplete, 2500);
+      }
+    }
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black px-6 text-center">
-      <div className="max-w-md">
+    <div className="day-content">
+      {/* Chocolate Block */}
+      <motion.div
+        onClick={handleOpen}
+        className="chocolate-wrapper"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Left Piece */}
+        <motion.div
+          className="chocolate-piece left"
+          animate={opened ? { x: -24, rotate: -4 } : {}}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
 
-        {/* Chocolate slab */}
-        {step >= 1 && (
+        {/* Right Piece */}
+        <motion.div
+          className="chocolate-piece right"
+          animate={opened ? { x: 24, rotate: 4 } : {}}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
+
+        {/* Heart Reveal */}
+        {opened && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="mx-auto mb-12 w-40 rounded-2xl bg-[#4b2e1e] p-4 shadow-lg"
+            className="chocolate-heart"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
           >
-            <div className="grid grid-cols-2 gap-2">
-              {[1, 2, 3, 4].map(i => (
-                <motion.div
-                  key={i}
-                  className="h-12 rounded-lg bg-[#6b3e26]"
-                  initial={{ opacity: 1 }}
-                  animate={{
-                    opacity: step >= 2 && i === 1 ? 0 : 1,
-                    y: step >= 2 && i === 1 ? 6 : 0,
-                  }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                />
-              ))}
-            </div>
+            ♥
           </motion.div>
         )}
+      </motion.div>
 
-        {/* Message */}
-        {step >= 3 && (
-          <motion.p
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.6 }}
-            className="text-pink-300 text-sm leading-relaxed tracking-wide"
-          >
-            You make life feel richer —
-            <br />
-            not louder.
-            <br /><br />
-            Like chocolate that melts slowly,
-            <br />
-            you make even the smallest moments
-            <br />
-            feel worth savoring.
-          </motion.p>
-        )}
-      </div>
+      {/* Message */}
+      {opened && (
+        <motion.p
+          className="day-message"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 1 }}
+        >
+          Some things don’t need to be shared.  
+          <br />
+          But with you, I want to.
+        </motion.p>
+      )}
     </div>
   );
 }

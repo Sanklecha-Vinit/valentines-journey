@@ -1,79 +1,62 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function HugDay({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState(0);
+export default function HugDay({
+  onComplete,
+}: {
+  onComplete?: () => void;
+}) {
+  const [showMessage, setShowMessage] = useState(false);
+  const completed = useRef(false);
 
   useEffect(() => {
-    const timers = [
-      setTimeout(() => setStep(1), 1200),   // presence
-      setTimeout(() => setStep(2), 3200),   // hug closes
-      setTimeout(() => setStep(3), 5200),   // message
-      setTimeout(() => onComplete(), 14000),
-    ];
+    const timer = setTimeout(() => {
+      setShowMessage(true);
 
-    return () => timers.forEach(clearTimeout);
+      if (!completed.current && onComplete) {
+        completed.current = true;
+        setTimeout(onComplete, 2500);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, [onComplete]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#090910] to-black px-6 text-center">
-      <div className="max-w-md flex flex-col items-center">
+    <div className="day-content">
+      {/* Hug Visual */}
+      <div className="hug-visual">
+        <motion.div
+          className="hug-shape left"
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+        />
 
-        {/* The Hug */}
-        {step >= 1 && (
-          <div className="relative w-72 h-40 mb-20 overflow-hidden">
-            {/* Left side */}
-            <motion.div
-              initial={{ x: -120, opacity: 0 }}
-              animate={{
-                x: step >= 2 ? -40 : -120,
-                opacity: 1,
-              }}
-              transition={{
-                duration: 2.4,
-                ease: "easeInOut",
-              }}
-              className="absolute left-0 top-0 w-44 h-full rounded-full bg-pink-300/40"
-            />
-
-            {/* Right side */}
-            <motion.div
-              initial={{ x: 120, opacity: 0 }}
-              animate={{
-                x: step >= 2 ? 40 : 120,
-                opacity: 1,
-              }}
-              transition={{
-                duration: 2.4,
-                ease: "easeInOut",
-              }}
-              className="absolute right-0 top-0 w-44 h-full rounded-full bg-pink-300/40"
-            />
-          </div>
-        )}
-
-        {/* Message */}
-        {step >= 3 && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
-            className="text-pink-200 text-sm leading-relaxed tracking-wide"
-          >
-            You don’t have to say anything.
-            <br />
-            You don’t have to be okay.
-            <br /><br />
-            This is just me,
-            <br />
-            holding you,
-            <br />
-            for as long as you need.
-          </motion.p>
-        )}
+        <motion.div
+          className="hug-shape right"
+          initial={{ x: 50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+        />
       </div>
+
+      {/* Message */}
+      {showMessage && (
+        <motion.p
+          className="day-message"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4 }}
+        >
+          Some hugs don’t try to fix anything.
+          <br /><br />
+          They just remind you  
+          that you’re not carrying everything alone.
+        </motion.p>
+      )}
     </div>
   );
 }

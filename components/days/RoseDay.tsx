@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-export default function RoseDay({ onComplete }: { onComplete: () => void }) {
+export default function RoseDay({ onComplete }: { onComplete?: () => void }) {
   const [step, setStep] = useState(0);
   const hasRun = useRef(false); // 👈 hard guard
 
@@ -16,7 +16,7 @@ export default function RoseDay({ onComplete }: { onComplete: () => void }) {
       setTimeout(() => setStep(2), 2600),
       setTimeout(() => setStep(3), 4200),
       setTimeout(() => setStep(4), 6000),
-      setTimeout(() => onComplete(), 12000),
+      setTimeout(() => onComplete?.(), 12000),
     ];
 
     return () => {

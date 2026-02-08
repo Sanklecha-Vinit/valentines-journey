@@ -1,125 +1,75 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function ValentinesDay() {
-  const ref = useRef<HTMLDivElement>(null);
+  const [opened, setOpened] = useState(false);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  const o1 = useTransform(scrollYProgress, [0.0, 0.2], [0, 1]);
-  const o2 = useTransform(scrollYProgress, [0.25, 0.45], [0, 1]);
-  const o3 = useTransform(scrollYProgress, [0.5, 0.7], [0, 1]);
-  const o4 = useTransform(scrollYProgress, [0.75, 1], [0, 1]);
-
-  const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+  useEffect(() => {
+    const timer = setTimeout(() => setOpened(true), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div
-      ref={ref}
-      className="relative h-[400vh] bg-gradient-to-b from-[#06060b] to-black"
-    >
-      <div className="sticky top-0 h-screen flex items-center justify-center px-6">
-        <div className="max-w-md space-y-20 text-center relative">
+    <div className="valentine-container">
+      {/* Envelope */}
+      {!opened && (
+        <motion.div
+          className="envelope"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1 }}
+        />
+      )}
 
-          {/* Scroll hint */}
-          <motion.div
-            style={{ opacity: scrollHintOpacity }}
-            className="absolute -top-16 left-1/2 -translate-x-1/2 text-pink-300/70 text-xs tracking-wide"
-          >
-            scroll slowly
-          </motion.div>
+      {/* Letter */}
+      {opened && (
+        <motion.div
+          className="valentine-letter"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2 }}
+        >
+          <p className="scroll-hint"></p>
 
-          {/* Letter – Part 1 */}
-          <motion.p
-            style={{ opacity: o1 }}
-            className="text-pink-200 text-sm leading-relaxed tracking-wide"
-          >
-            I didn’t fall for you
-            <br />
-            all at once.
-            <br /><br />
-            It happened quietly —
-            <br />
-            in late replies,
-            <br />
-            shared silences,
-            <br />
-            and the way you stayed
-            <br />
-            even when things were simple.
-          </motion.p>
+          <section>
+            <p>
+              This wasn’t something I planned in a moment.  
+              It’s something I realized slowly.
+            </p>
+          </section>
 
-          {/* Letter – Part 2 */}
-          <motion.p
-            style={{ opacity: o2 }}
-            className="text-pink-200 text-sm leading-relaxed tracking-wide"
-          >
-            Somewhere between
-            <br />
-            ordinary days
-            <br />
-            and conversations that lasted
-            <br />
-            longer than they should have,
-            <br /><br />
-            you became the first place
-            <br />
-            my mind goes
-            <br />
-            when I need comfort.
-          </motion.p>
+          <section>
+            <p>
+              In the way you listen.  
+              In the way you stay.  
+              In the way things feel easier just because you’re there.
+            </p>
+          </section>
 
-          {/* Letter – Part 3 */}
-          <motion.p
-            style={{ opacity: o3 }}
-            className="text-pink-200 text-sm leading-relaxed tracking-wide"
-          >
-            Loving you
-            <br />
-            didn’t feel dramatic.
-            <br />
-            It felt steady.
-            <br /><br />
-            Like choosing you
-            <br />
-            without needing a reason.
-            <br />
-            Like feeling safe
-            <br />
-            just knowing you exist.
-          </motion.p>
+          <section>
+            <p>
+              Loving you doesn’t feel loud or dramatic.  
+              It feels steady.  
+              It feels sure.
+            </p>
+          </section>
 
-          {/* Letter – Part 4 (Confession) */}
-          <motion.p
-            style={{ opacity: o4 }}
-            className="text-pink-200 text-sm leading-relaxed tracking-wide"
-          >
-            So this is me,
-            <br />
-            finally saying
-            <br />
-            what I’ve known for years.
-            <br /><br />
-            I don’t want a perfect story.
-            <br />
-            I want *you* —
-            <br />
-            in the small moments,
-            <br />
-            the quiet days,
-            <br />
-            and everything that comes after.
-            <br /><br />
-            I love you.
-          </motion.p>
+          <section>
+            <p>
+              And if I had to choose again —  
+              I wouldn’t look for anything new.
+            </p>
+          </section>
 
-        </div>
-      </div>
+          <section>
+            <p className="final-line">
+              I’d just choose you.
+            </p>
+          </section>
+        </motion.div>
+      )}
     </div>
   );
 }
