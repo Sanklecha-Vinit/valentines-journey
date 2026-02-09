@@ -1,15 +1,32 @@
+/* =====================
+   ROOT & RESET
+===================== */
+/* Base reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Shared page layout */
 .page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #ff5f9e, #ff86b2);
   color: white;
 }
 
+/* Wrapper (home page) */
 .wrapper {
   max-width: 420px;
   margin: auto;
   padding: 48px 20px;
 }
 
+/* Titles */
 .title {
   text-align: center;
   font-size: 32px;
@@ -18,8 +35,28 @@
 
 .subtitle {
   text-align: center;
-  opacity: 0.9;
+  font-size: 14px;
+  opacity: 0.85;
   margin-bottom: 32px;
+}
+
+/* Day content (ALL day pages) */
+.day-content {
+  min-height: 100vh;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Message */
+.day-message {
+  margin-top: 28px;
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 320px;
 }
 
 .cards {
@@ -29,180 +66,150 @@
 }
 
 .day-card {
-  background: rgba(255,255,255,0.18);
   border-radius: 18px;
-  padding: 18px;
+  padding: 18px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(12px);
   border: none;
-  color: white;
   cursor: pointer;
+  color: white;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(12px);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.day-card:hover {
+  transform: translateY(-2px);
 }
 
 .day-card.locked {
-  opacity: 0.6;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.locked-screen {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(180deg, #ff5f9e, #ff86b2);
-  color: white;
-  font-size: 20px;
+.day-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.day-subtitle {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+.lock-text {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 6px;
+}
+.rose-bg {
+  background: linear-gradient(180deg, #ff6f91, #ff9aa2);
 }
 
 .propose-bg {
-  background: linear-gradient(180deg, #ff5f9e, #ff85b3);
+  background: linear-gradient(180deg, #c850c0, #4158d0);
 }
 
-.ring {
-  width: 90px;
-  height: 90px;
-  border: 4px solid rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
-  margin-bottom: 32px;
+/* .chocolate-bg {
+  background: linear-gradient(180deg, #5a2d0c, #8b4513);
+} */
+
+.teddy-bg {
+  background: linear-gradient(180deg, #fcb69f, #ffecd2);
+}
+
+.promise-bg {
+  background: linear-gradient(180deg, #89f7fe, #66a6ff);
+}
+
+.hug-bg {
+  background: linear-gradient(180deg, #fddb92, #d1fdff);
+}
+
+.kiss-bg {
+  background: linear-gradient(180deg, #ff0844, #ffb199);
+}
+
+.valentine-bg {
+  background: linear-gradient(180deg, #a18cd1, #fbc2eb);
+}
+
+/* 🍫 Chocolate Day Background */
+.chocolate-bg {
+  background: linear-gradient(180deg, #2b150b, #5a2d0c);
+  color: #fff;
+}
+
+/* Layout */
+.chocolate-container {
   position: relative;
+  width: 260px;
+  height: 120px;
+  margin-bottom: 36px;
 }
 
-.ring::after {
-  content: "";
+/* Chocolate blocks */
+.choco {
   position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 24px;
-  height: 18px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.9);
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(145deg, #6b3a1a, #3b1f0c);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
-.final-question {
-  font-size: 28px;
-  font-weight: 600;
-  margin: 28px 0 18px;
-}
-
-.proposal-buttons {
-  display: flex;
-  gap: 18px;
-  justify-content: center;
-}
-
-.proposal-buttons button {
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.proposal-buttons .yes {
-  background: white;
-  color: #ff5f9e;
-}
-
-.proposal-buttons .always {
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-}
-.propose-cute {
-  background: linear-gradient(180deg, #ff6fae, #ff9fc9);
-}
-
-/* Heart shape */
-.cute-heart {
-  width: 70px;
-  height: 70px;
-  background: #ff3b7f;
-  position: relative;
-  transform: rotate(45deg);
-  margin-bottom: 28px;
-}
-
-.cute-heart::before,
-.cute-heart::after {
-  content: "";
-  width: 70px;
-  height: 70px;
-  background: #ff3b7f;
-  border-radius: 50%;
-  position: absolute;
-}
-
-.cute-heart::before {
-  top: -35px;
+.choco.left {
   left: 0;
 }
 
-.cute-heart::after {
-  left: -35px;
-  top: 0;
+.choco.right {
+  right: 0;
 }
 
-.question-text {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 18px;
+/* Heart */
+.choco-heart {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
 }
 
-.cute-buttons {
+/* Message */
+.day-message {
+  max-width: 420px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.8;
+  opacity: 0.95;
+}
+.proposal-buttons {
   display: flex;
-  gap: 16px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 24px;
 }
 
-.cute-buttons button {
-  padding: 10px 20px;
-  border-radius: 999px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.cute-buttons .yes {
-  background: white;
-  color: #ff3b7f;
-}
-
-.cute-buttons .always {
-  background: rgba(255, 255, 255, 0.3);
-  color: white;
-}
-
-/* Button container */
-.cute-buttons {
-  display: flex;
-  flex-direction: column; /* 👈 makes it more cute on mobile */
-  gap: 14px;              /* 👈 proper breathing space */
-  margin-top: 20px;
-}
-
-/* Buttons */
-.cute-buttons button {
+.proposal-buttons button {
   padding: 12px 26px;
   border-radius: 999px;
   border: none;
   font-size: 16px;
   cursor: pointer;
   background: white;
-  color: #ff3b7f;
+  color: #ff5f9e;
   transition: transform 0.2s ease;
 }
 
-.cute-buttons button:hover {
+.proposal-buttons button:hover {
   transform: scale(1.04);
 }
 
-/* Acceptance message */
 .accept-message {
   margin-top: 28px;
   font-size: 18px;
   line-height: 1.6;
-  text-align: center;
   max-width: 300px;
 }

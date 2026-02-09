@@ -2,8 +2,8 @@
 
 import { useParams } from "next/navigation";
 import { DAYS } from "@/data/daysConfig";
-import { useDateUnlock } from "@/hooks/useDateUnlock";
 
+// Day components
 import RoseDay from "@/components/days/RoseDay";
 import ProposeDay from "@/components/days/ProposeDay";
 import ChocolateDay from "@/components/days/ChocolateDay";
@@ -12,33 +12,52 @@ import PromiseDay from "@/components/days/PromiseDay";
 import HugDay from "@/components/days/HugDay";
 import KissDay from "@/components/days/KissDay";
 import ValentinesDay from "@/components/days/ValentinesDay";
+import DateGuard from "@/components/DateGuard";
+
 
 export default function DayPage() {
   const params = useParams();
   const dayId = Number(params.dayId);
+
   const day = DAYS.find(d => d.id === dayId);
 
-  if (!day) return <div className="center">Invalid day</div>;
-
-  const unlocked = useDateUnlock(day.date);
-
-  if (!unlocked) {
+  if (!day) {
     return (
-      <div className="locked-screen">
-        <p>This moment opens at midnight 💕</p>
+      <div style={{ padding: 40, color: "white" }}>
+        Invalid Day
       </div>
     );
   }
 
-  switch (dayId) {
-    case 1: return <RoseDay />;
-    case 2: return <ProposeDay />;
-    case 3: return <ChocolateDay />;
-    case 4: return <TeddyDay />;
-    case 5: return <PromiseDay />;
-    case 6: return <HugDay />;
-    case 7: return <KissDay />;
-    case 8: return <ValentinesDay />;
-    default: return null;
-  }
+  const renderDay = () => {
+    switch (dayId) {
+      case 1:
+        return <RoseDay onComplete={() => {}} />;
+      case 2:
+        return <ProposeDay onComplete={() => {}} />;
+      case 3:
+  return <ChocolateDay />;
+      case 4:
+        return <TeddyDay onComplete={() => {}} />;
+      case 5:
+        return <PromiseDay onComplete={() => {}} />;
+      case 6:
+        return <HugDay onComplete={() => {}} />;
+      case 7:
+        return <KissDay onComplete={() => {}} />;
+      case 8:
+        return <ValentinesDay onComplete={() => {}} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+  <DateGuard dayId={dayId}>
+    <main className="min-h-screen flex items-center justify-center bg-pink-600">
+      {renderDay()}
+    </main>
+  </DateGuard>
+);
+
 }

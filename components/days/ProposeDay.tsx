@@ -3,92 +3,80 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function ProposeDay() {
+export default function ProposeDay({ onComplete }: { onComplete: () => void }) {
   const [step, setStep] = useState(0);
-  const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStep(1), 1200),
-      setTimeout(() => setStep(2), 2600),
-      setTimeout(() => setStep(3), 4200),
+      setTimeout(() => setStep(1), 1000),
+      setTimeout(() => setStep(2), 3000),
+      setTimeout(() => onComplete(), 12000),
     ];
 
-    return () => timers.forEach(clearTimeout);
+    return () => {
+      timers.forEach(clearTimeout);
+    };
   }, []);
 
   return (
-    <div className="day-content propose-cute">
-      {/* Heart */}
-      <motion.div
-        className="cute-heart"
-        animate={
-          accepted
-            ? { scale: [1, 1.25, 1], rotate: [45, 45, 45] }
-            : { scale: [0, 1.1, 1], rotate: 45 }
-        }
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      />
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-950 via-violet-900 to-purple-950 px-6 text-center">
+      <div className="max-w-lg">
+        {step >= 1 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5 }}
+            className="mb-16 text-8xl"
+          >
+            💍
+          </motion.div>
+        )}
 
-      {/* Messages before proposal */}
-      {!accepted && step >= 1 && (
-        <motion.p
-          className="day-message"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          I smile a little more when I think of you.
-        </motion.p>
-      )}
+        {step >= 2 && (
+          <div className="text-purple-200 text-base leading-relaxed space-y-6">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              className="text-lg text-purple-100"
+            >
+              I've been thinking about this for a while.
+            </motion.p>
 
-      {!accepted && step >= 2 && (
-        <motion.p
-          className="day-message"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          And somehow… that happens all the time.
-        </motion.p>
-      )}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 1 }}
+            >
+              Not about what to say, but about how to say what I already know.
+            </motion.p>
 
-      {/* Question + buttons */}
-      {!accepted && step >= 3 && (
-        <motion.div
-          className="cute-question"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <p className="question-text">
-            Will you be mine? 💕
-          </p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3, duration: 1 }}
+              className="text-lg"
+            >
+              You make the ordinary feel extraordinary.
+              <br />
+              The quiet moments feel full.
+            </motion.p>
 
-          <div className="cute-buttons">
-            <button onClick={() => setAccepted(true)}>
-              Yes! 💖
-            </button>
-            <button onClick={() => setAccepted(true)}>
-              Always 💗
-            </button>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 4.5, duration: 1 }}
+              className="text-xl font-light text-purple-50 pt-4"
+            >
+              So here's the truth —
+              <br />
+              <span className="text-2xl font-medium">I choose you.</span>
+              <br />
+              <span className="text-sm opacity-80">Not just today, but every day after.</span>
+            </motion.p>
           </div>
-        </motion.div>
-      )}
-
-      {/* Acceptance message */}
-      {accepted && (
-        <motion.p
-          className="accept-message"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          You just made my heart very, very happy.  
-          <br />
-          I’m so glad it’s you. 💞
-        </motion.p>
-      )}
+        )}
+      </div>
     </div>
   );
 }

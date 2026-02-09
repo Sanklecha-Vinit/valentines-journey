@@ -1,81 +1,81 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function TeddyDay({
-  onComplete,
-}: {
-  onComplete?: () => void;
-}) {
-  const [showMessage, setShowMessage] = useState(false);
-  const completed = useRef(false);
+export default function TeddyDay({ onComplete }: { onComplete: () => void }) {
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowMessage(true);
+    const timers = [
+      setTimeout(() => setStep(1), 1000),
+      setTimeout(() => setStep(2), 3500),
+      setTimeout(() => onComplete(), 13000),
+    ];
 
-      if (!completed.current) {
-        completed.current = true;
-        if (onComplete) {
-          setTimeout(onComplete, 2500);
-        }
-      }
-    }, 2400);
-
-    return () => clearTimeout(timer);
-  }, [onComplete]);
+    return () => {
+      timers.forEach(clearTimeout);
+    };
+  }, []);
 
   return (
-    <div className="day-content">
-      {/* Teddy */}
-      <motion.div
-        className="teddy"
-        initial={{ scale: 0.85, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-      >
-        {/* Head */}
-        <div className="teddy-head">
-          <div className="teddy-eye left" />
-          <div className="teddy-eye right" />
-          <div className="teddy-nose" />
-        </div>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-rose-100 via-pink-100 to-rose-200 px-6 text-center">
+      <div className="max-w-lg">
+        {step >= 1 && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.2, type: "spring", bounce: 0.5 }}
+            className="mb-16 text-9xl"
+          >
+            🧸
+          </motion.div>
+        )}
 
-        {/* Arms */}
-<div className="teddy-arm left" />
-<div className="teddy-arm right" />
+        {step >= 2 && (
+          <div className="text-rose-900 text-base leading-relaxed space-y-5">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              className="text-lg font-medium text-rose-800"
+            >
+              Some days, I don't know how to explain what I feel.
+            </motion.p>
 
-{/* Body */}
-<div className="teddy-body">
-  <div className="teddy-belly" />
-</div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 1 }}
+            >
+              But when I'm with you, I don't have to.
+            </motion.p>
 
-{/* Legs */}
-<div className="teddy-leg left" />
-<div className="teddy-leg right" />
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3, duration: 1 }}
+            >
+              I don't have to be strong.
+              <br />
+              I don't have to act okay.
+              <br />
+              I don't have to pretend I've figured everything out.
+            </motion.p>
 
-      </motion.div>
-
-      {/* Message */}
-      {showMessage && (
-        <motion.p
-          className="day-message"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
-        >
-          Some days I don’t know how to explain what I feel.  
-          But when I’m with you, I don’t have to.
-          <br /><br />
-          I don’t have to be strong.  
-          I don’t have to act okay.  
-          I don’t have to pretend I’ve figured everything out.
-          <br /><br />
-          With you, I can just exist —  
-          quietly, honestly, and safely.
-        </motion.p>
-      )}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 4.5, duration: 1 }}
+              className="text-lg text-rose-700 pt-4"
+            >
+              With you, I can just exist —
+              <br />
+              <span className="text-xl font-light text-rose-900">quietly, honestly, and safely.</span>
+            </motion.p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
